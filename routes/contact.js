@@ -26,15 +26,15 @@ router.post("/formulario", (req, res) => {
     port: 465,
     secure: true,
     auth: {
-      user: 'mati02171996@gmail.com',
-      pass: 'psmkeajrlokczwgb'
+      user: '*********@*****.com',
+      pass: '*********'
     }
   });
 
   if (!validator.isEmpty(req.body.email && req.body.asunto && req.body.consulta)) {
     const mailOptions = {
-      from: `"Loco 5" <mati02171996@gmail.com>`,
-      to: `"mati02171996@gmail.com"`,
+      from: `"Loco 5" <********@******.com>`,
+      to: `"*********@*****.com"`,
       subject: `${req.body.asunto}`,
       html: `<ul style="line-height:30px;"><li><strong>Email: </strong>${req.body.email}</li><li><strong>Asunto: </strong>${req.body.asunto}</li><li><strong>Consulta: </strong>${req.body.consulta}</li></ul>`
     };
