@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>head}}
+
+<body>
+    {{>header}}
+    <main>
+        <section class="principal" name="principal">
+            <div class="container">
+                <div class="row">
+                    <div class="c-col col-sm-12 col-md-8 col-lg-8 col-xl-8 nosotros">
+                        <h2>Sobre nosotros</h2>
+                        <div class="img-slider">
+                            <div class="slide activeslide">
+                                <img src="img/imagen.png" alt="Primer imagen de la galeria">
+                            </div>
+                            <div class="slide">
+                                <img src="img/imagen2.png" alt="Segunda imagen de la galeria">
+                            </div>
+                            <div class="slide">
+                                <img src="img/imagen3.png" alt="Tercera imagen de la galeria">
+                            </div>
+                            <div class="navigation">
+                                <div class="btn"></div>
+                                <div class="btn"></div>
+                                <div class="btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-col col-sm-12 col-md-4 col-lg-4 col-xl-4 sorteo">
+                        <h2>¿Queres ser rico?</h2>
+                        <p>Participa de nuestro sorteo</p>
+                    </div>
+                    <div class="c-col col-sm-12 col-md-12 col-lg-12 col-xl-12 reglas">
+                            <h2>Reglas</h2>
+                            <ul>
+                                <li>El sorteo se realizara online el dia 1 septiembre del 2021 a las 20:00hs</li>
+                                <li>Cuando se paga la apuesta se deben anotar los 5 numeros de la jugada</li>
+                                <li>Los numeros permitidos para jugar varian entre 0 y 30, haciendo un total de 31
+                                    numeros</li>
+                                <li>Solo personas de nacionalidad Argentina tienen permitido participar del sorteo</li>
+                                <li>El sorteo se realiza online con una herramienta propia de la pagina que elige a los numeros ganadores aleatoriamente</li>
+                                <li>Los resultados se mostraran en instagram y en una seccion de la pagina</li>
+                                <li>Cualquier consulta que pueden llegar a tener por favor mandenla por la seccion de
+                                    contacto, ¡Muchas Gracias!</li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <section class="contacto" name="contacto">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <h2>Consultas</h2>
+                        <hr>
+                        <form method="POST" action="/formulario">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com"
+                                    name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="asunto">Asunto</label>
+                                <textarea class="form-control" id="asunto" name="asunto"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="consulta">Consulta</label>
+                                <textarea class="form-control" id="consulta" rows="3" name="consulta"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary boton">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    {{>footer}}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{#if alert}}
+    <script>
+        let timerInterval;
+        swal.fire({
+            title: 'La consulta se ha enviado correctamente',
+            html: 'Estaremos en contacto con usted',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === swal.DismissReason.timer) {
+            }
+        })
+    </script>
+    {{/if}}
+    {{#if alerterror}}
+    <script>
+        let timerInterval;
+        swal.fire({
+            title: 'La consulta no se ha enviado',
+            html: 'Intente nuevamente mas tarde',
+            icon: 'error',
+            timer: 2000,
+            timerProgressBar: true,
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === swal.DismissReason.timer) {
+            }
+        })
+    </script>
+    {{/if}}
+    {{#if alertconsultavacia}}
+    <script>
+        let timerInterval;
+        swal.fire({
+            title: 'La consulta no se ha enviado',
+            html: 'Por favor complete todos los campos',
+            icon: 'warning',
+            timer: 2000,
+            timerProgressBar: true,
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === swal.DismissReason.timer) {
+            }
+        })
+    </script>
+    {{/if}}
+
+    <script type="text/javascript">
+        var slides = document.querySelectorAll('.slide');
+        var btns = document.querySelectorAll('.btn');
+        let currentSlide = 1;
+        // Slider Manual
+        var manualNav = function (manual) {
+            slides.forEach((slide) => {
+                slide.classList.remove('activeslide');
+                btns.forEach((btn) => {
+                    btn.classList.remove('activeslide');
+                });
+            });
+            slides[manual].classList.add('activeslide');
+            btns[manual].classList.add('activeslide');
+        }
+        btns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                manualNav(i);
+                currentSlide = i;
+            });
+        });
+
+        // Slider Automatico
+
+        var repeat = function (activeClass) {
+            let active = document.getElementsByClassName('activeslide');
+            let i = 1;
+
+            var repeater = () => {
+                setTimeout(function () {
+                    [...active].forEach((activeSlide) => {
+                        activeSlide.classList.remove('activeslide');
+                    });
+                    slides[i].classList.add('activeslide');
+                    btns[i].classList.add('activeslide');
+                    i++;
+                    if (slides.length == i) {
+                        i = 0;
+                    }
+                    if (i >= slides.length) {
+                        return;
+                    }
+                    repeater();
+                }, 6000);
+            }
+            repeater();
+        }
+        repeat();
+
+    </script>
+
+
+    <!-- SDK MercadoPago.js V2 -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    <script>
+        // Credenciales de SDK
+        const mp = new MercadoPago('TEST-34167ed0-d3db-4c21-a63f-6f063615e3bf', {
+            locale: 'es-AR'
+        });
+
+        // Inicializa el checkout
+        mp.checkout({
+            preference: {
+                id: 'YOUR_PREFERENCE_ID'
+            },
+            render: {
+                container: '.sorteo', // Indica dónde se mostrará el botón de pago
+                label: 'Participar del sorteo', // Cambia el texto del botón de pago (opcional)
+            }
+        });
+    </script>
+    
+</body>
+
+</html>
